@@ -1,0 +1,28 @@
+/**
+This file contains all the styling for Moodbaord
+ */
+
+/* Entire page background */
+body {
+    background-color: white;
+}
+
+
+/* Page title */
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#title {
+    text-align: center;
+    color: lightblue;
+}
+
+#title a:link{
+    color: lightblue;
+}
+
+#title a:hover {
+    color: lightblue;
+}
