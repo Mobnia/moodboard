@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicons/favicon.png" />
+
+    <title>Moodboard</title>
+</head>
+
+<body>
+
+<h3 class="h3 text-muted">Create Project</h3>
+
+<!-- Image upload form -->
+<form id="my-form" method="POST" enctype="multipart/form-data">
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Project title</span>
+        </div>
+        <input type="text" class="form-control" name="title" placeholder="Title" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Description</span>
+        </div>
+        <textarea name="description" class="form-control" placeholder="Description" aria-label="With textarea"></textarea>
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <input type="file" id="img-files" name="image" multiple><br>
+        <label for="img-files"></label>
+    </div>
+
+    <output id="result"></output>
+
+    <div>
+        <button type="button" class="btn btn-primary" onclick="sendData()">
+            Share & publish
+        </button>
+    </div>
+
+</form>
+
+<!-- Js script to handle file upload -->
+<script>
+
+    // File preview
+   /* window.onload = function(){
+
+        //Check File API support
+        if(window.File && window.FileList && window.FileReader)
+        {
+            let filesInput = document.getElementById("img-files");
+
+            filesInput.addEventListener("change", function(event){
+                let files = event.target.files;
+                let output = document.getElementById("result");
+
+                for(let i = 0; i < files.length; i++)
+                {
+                    let file = files[i];
+                    //Only pics
+                    if(!file.type.match('image'))
+                        continue;
+                    let imageViewer = new FileReader();
+
+                    imageViewer.addEventListener("load",function(event){
+                        let picFile = event.target;
+                        let div = document.createElement("div");
+                        div.innerHTML = "<img alt='images' height='120px' width='160px'  src='" + picFile.result + "'" +
+                            " title='" + picFile.name + "' />";
+                        output.insertBefore(div,null);
+                    });
+                    //Read the image
+                    imageViewer.readAsDataURL(file);
+                }
+            });
+        }
+        else
+        {
+            console.log("This browser does not support File API");
+        }
+    };
+*/
+
+
+
+  /* function logResult(result) {
+       console.log(result);
+   }
+
+   function logError(error) {
+       console.log('An error occured: \n', error);
+   }
+
+   function validateResponse(response) {
+       if (!response.ok) {
+           throw Error(response.statusText);
+       }
+       return response;
+   }
+
+   function readResponseAsJSON(response) {
+       return response.json();
+   }
+
+   function fetchJSON(pathToResource) {
+       fetch(pathToResource)
+           .then(validateResponse)
+           .then(readResponseAsJSON)
+           .then(logResult)
+           .catch(logError);
+   }*/
+
+
+  function encodeImageFileAsURL(element) {
+      let file = element.files[0];
+      let reader = new FileReader();
+      reader.onloadend = function () {
+          console.log('RESULT', reader.result)
+      };
+      return reader.readAsDataURL(file);
+  }
+
+  async function sendData() {
+        var formData = document.getElementById('my-form');
+        var photos = document.querySelector('input[type="file"][multiple]');
+
+
+        for (let i = 0; i < photos.files.length; i++) {
+            formData.append('image', photos.files[i]);
+        }
+
+        const data = new URLSearchParams(new FormData(formData));
+
+        let myHeaders = new Headers(
+            {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Client-ID 8ed6ebc0f3cac76'
+            }
+        );
+
+         fetch('https://api.imgur.com/3/upload', {
+             method: 'post',
+             headers: myHeaders,
+             body: data
+             }
+         )
+            .then(function (response) {
+                /*if (!response.ok) {
+                    throw Error(response.statusText);
+                }*/
+                return JSON.stringify(response.json());
+            })
+            .then(function (jsonResponse) {
+                console.log(jsonResponse);
+            })
+            .catch(function (error) {
+                console.log('An error occured: \n',  error);
+            });
+
+    }
+</script>
+</body>
+</html>
+

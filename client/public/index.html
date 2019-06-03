@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Meta data-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Tab Title-->
+    <title>Moodboard</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicons/favicon.png" />
+
+    <!--Js files-->
+    <script type="text/javascript" src="js/api.js"></script>
+</head>
+
+<!--Page Body Begins here-->
+
+<body onload="fetchProjects()">
+
+    <!--Page title-->
+    <div class="jumbotron">
+        <span id="space"></span>
+        <p id="title">
+            <!-- Logo -->
+            <a href="#">
+            <img class="img-rounded" id="img-logo" src="../assets/images/blank-cover.png" width="50" height="50" alt="moodboard-logo">
+            <span>Moodboard</span> 
+            </a>
+        </p>
+    </div>
+
+<div class="container">   
+
+    <!--Page description-->
+    <div class="page-desc">
+        <p id="page-desc-main">Share your logo design ideas<span id="changling"></span> with a link </p>
+        <p id="page-desc-sub">No account needed</p>
+    </div>
+
+    <!-- instruction on how to use the page -->
+    <div class="text-center">
+        <p>Start with a <a href="form.html"> blank moodboard</a> or choose one of the <br>starter moodboards below:</p>
+    </div>
+
+    <!--Project Creation-->
+    <div class="container">
+        <div class="row">
+            <a href="form.html">
+                <figure>
+                    <img class="img-fluid" id="img-board" src="../assets/images/blank-cover.jpg" alt="blank-board" width="160" height="120">
+                    <figcaption>Blank board
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <figure id="project-stack" class="d-inline" onload="fetchProjects()">
+        </figure>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

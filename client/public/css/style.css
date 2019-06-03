@@ -1,0 +1,111 @@
+/**
+This file contains all the styling for Moodbaord
+ */
+
+/* Entire page background */
+body {
+    background-color: white;
+}
+
+
+/* Page title */
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#title-space {
+   /* padding: 50px; */
+}
+
+#title {
+    margin-left: 100px;
+    color: lightblue;
+    font-size: 25px;
+}
+
+#title a:link{
+    color: lightblue;
+}
+
+#title a:hover {
+    color: lightblue;    
+}
+
+/* Below the page title */
+.page-desc {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.page-desc #page-desc-main {
+    font-size: 25px;
+}
+
+.page-desc #page-desc-sub {
+    font-size: 15px;
+}
+
+/* Image gallery */
+div .gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+#board-desc {
+    padding: 15px;
+    text-align: center;
+}
+
+#img-logo {
+    border: 1px black;
+}
+
+#img-board {
+    border: 1px solid black;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+.column {
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+li {
+    display: inline;
+}
+
+figure {
+    display: inline;
+}
+
