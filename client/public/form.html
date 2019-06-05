@@ -34,7 +34,7 @@
     </div>
     <br>
     <div class="input-group mb-3">
-        <input type="file" id="img-files" name="image" multiple><br>
+        <input type="file" id="img-files" multiple><br>
         <label for="img-files"></label>
     </div>
 
@@ -120,51 +120,67 @@
    }*/
 
 
-  function encodeImageFileAsURL(element) {
-      let file = element.files[0];
+  function formToBase64(image, formData) {
       let reader = new FileReader();
-      reader.onloadend = function () {
-          console.log('RESULT', reader.result)
+
+      reader.onloadend = function() {
+          return formData.append("image", reader.result);
       };
-      return reader.readAsDataURL(file);
+
+        if (image) {
+            reader.readAsDataURL(image);
+        }
   }
 
   async function sendData() {
-        var formData = document.getElementById('my-form');
-        var photos = document.querySelector('input[type="file"][multiple]');
+        var reader = new FileReader();
+        var myForm = document.getElementById('my-form');
+        var formData = new FormData(myForm);
+        var image = document.querySelector('input[type="file"][multiple]').files[0];
+        var data;
 
-
-        for (let i = 0; i < photos.files.length; i++) {
+        /*for (let i = 0; i < photos.files.length; i++) {
             formData.append('image', photos.files[i]);
+        }*/
+
+       //formToBase64(image, formData);
+
+        if (image){
+            reader.readAsDataURL(image)
         }
 
-        const data = new URLSearchParams(new FormData(formData));
+      reader.onloadend =  function () {
 
-        let myHeaders = new Headers(
-            {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': 'Client-ID 8ed6ebc0f3cac76'
-            }
-        );
+          let myHeaders = new Headers(
+              {
+                  'Authorization': 'Client-ID 8ed6ebc0f3cac76'
+              }
+          );
 
-         fetch('https://api.imgur.com/3/upload', {
-             method: 'post',
-             headers: myHeaders,
-             body: data
-             }
-         )
-            .then(function (response) {
-                /*if (!response.ok) {
-                    throw Error(response.statusText);
-                }*/
-                return JSON.stringify(response.json());
-            })
-            .then(function (jsonResponse) {
-                console.log(jsonResponse);
-            })
-            .catch(function (error) {
-                console.log('An error occured: \n',  error);
-            });
+
+          formData.append("image", reader.result.split('base64')[1]);
+          data = new URLSearchParams(formData);
+
+
+          fetch('http://localhost:8020/https://api.imgur.com/3/image', {
+                  method: 'post',
+                  headers: myHeaders,
+                  body: formData
+              }
+          )
+              .then(function (response) {
+                  if (!response.ok) {
+                      throw Error(response.statusText);
+                  }
+                  return JSON.stringify(response.json());
+              })
+              .then(function (jsonResponse) {
+                  console.log(jsonResponse);
+              })
+              .catch(function (error) {
+                  console.log('An error occured: \n',  error);
+              });
+      };
 
     }
 </script>
