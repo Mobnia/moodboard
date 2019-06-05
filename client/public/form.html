@@ -41,7 +41,7 @@
     <output id="result"></output>
 
     <div>
-        <button type="button" class="btn btn-primary" onclick="sendData()">
+        <button type="button" class="btn btn-primary" onclick="statusPage()">
             Share & publish
         </button>
     </div>
@@ -111,10 +111,6 @@
        return response.json();
    }
 
-    function successPage() {
-        window.location.href = "success.html"
-    }
-
    function fetchRequest(pathToResource, method, myHeaders, formData) {
        fetch(pathToResource, {
            method: method,
@@ -124,11 +120,10 @@
            .then(validateResponse)
            .then(readResponseAsJSON)
            .then(logResult)
-           .then(successPage)
            .catch(logError);
    }
 
-   function sendData() {
+   async function sendData() {
        var url = "http://localhost:8020/https://api.imgur.com/3/image";
        var method = "post";
         var reader = new FileReader();
@@ -144,12 +139,25 @@
         if (image){
             reader.readAsDataURL(image)
         }
-        reader.onloadend =  function () {
+
+       reader.onloadend = function () {
             formData.append("image", reader.result.split('base64')[1]); // Remove base64 string prefixed to file url
 
             fetchRequest(url, method, myHeaders, formData);
+
         };
+
     }
+
+    function statusPage() {
+        let promise = sendData();
+
+        promise.then(function () {
+            window.location.href = "success.html";
+        });
+    }
+
+
 
 </script>
 </body>
