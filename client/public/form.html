@@ -126,27 +126,27 @@
    async function sendData() {
        var url = "http://localhost:8020/https://api.imgur.com/3/image";
        var method = "post";
-        var reader = new FileReader();
-        var myForm = document.getElementById('my-form');
-        var formData = new FormData(myForm);
-        var image = document.querySelector('input[type="file"][multiple]').files[0];
-        var myHeaders = new Headers({'Authorization': 'Client-ID 8ed6ebc0f3cac76' });
+       var reader = new FileReader();
+       var myForm = document.getElementById('my-form');
+       var formData = new FormData(myForm);
+       var images = document.querySelector('input[type="file"][multiple]').files;
+       var myHeaders = new Headers({'Authorization': 'Client-ID 8ed6ebc0f3cac76'});
 
-        /*for (let i = 0; i < photos.files.length; i++) {
-            formData.append('image', photos.files[i]);
-        }*/
+       for (let i = 0; i < images.length; i++) {
+       let image = images[i];
 
-        if (image){
-            reader.readAsDataURL(image)
-        }
+       if (image) {
+           reader.readAsDataURL(image)
+       }
 
        reader.onloadend = function () {
-            formData.append("image", reader.result.split('base64')[1]); // Remove base64 string prefixed to file url
+           formData.append("image", reader.result.split('base64')[1]); // Remove base64 string prefixed to file url
 
-            fetchRequest(url, method, myHeaders, formData);
+           console.log(reader.result);
+           return fetchRequest(url, method, myHeaders, formData);
+       };
 
-        };
-
+       }
     }
 
     function statusPage() {
